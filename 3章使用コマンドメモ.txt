@@ -1,0 +1,92 @@
+yitest00001@gmail.com
+LetsEngineer1
+
+PC0PC1 
+デフォルトゲートウェイはほとんどの場合、「同一ネットワークに該当するルータのポート
+
+
+R0
+en
+conf t
+interface gigabitethernet0/0
+ip address 192.168.1.254 255.255.255.0
+no shutdown
+exit
+interface gigabitethernet0/1
+ip address 192.168.2.254 255.255.255.0
+no shutdown
+exit
+exit
+exit
+
+
+R1
+en
+conf t
+interface gigabitethernet0/0
+ip address 192.168.2.253 255.255.255.0
+no shutdown
+exit
+interface gigabitethernet0/1
+ip address 192.168.3.253 255.255.255.0
+no shutdown
+exit
+exit
+exit
+
+en
+conf t
+ip route 192.168.4.0 255.255.255.0 192.168.3.252
+exit
+
+
+R2
+en
+conf t
+interface gigabitethernet0/0
+ip address 192.168.3.252 255.255.255.0
+no shutdown
+exit
+interface gigabitethernet0/1
+ip address 192.168.4.252 255.255.255.0
+no shutdown
+exit
+exit
+exit
+
+
+OSPF設定 すべてのルータに設定
+en
+conf t
+router ospf 1
+network 192.168.0.0 0.0.255.255 area 0
+exit
+exit
+show ip route
+ 
+
+ping確認
+ping 192.168.3.1
+ping 192.168.4.1
+
+
+ip route確認
+en
+show ip route
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
