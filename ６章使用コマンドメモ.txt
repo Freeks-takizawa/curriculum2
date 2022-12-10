@@ -1,0 +1,116 @@
+yitest00001@gmail.com
+LetsEngineer1
+
+
+
+①ルータにIPアドレスを振る
+192.168.1.254
+255.255.255.0
+
+en
+conf t
+interface GigabitEthernet0/0
+ip address 192.168.1.254 255.255.255.0
+no shutdown
+exit
+exit
+conf t
+interface GigabitEthernet0/1
+ip address 192.168.2.254 255.255.255.0
+no shutdown
+exit
+exit
+exit
+
+②サーバー設定
+192.168.1.100
+とAAA設定
+
+③ルーターAAA設定
+en
+conf t
+aaa new-model
+aaa authentication enable default group radius enable
+radius-server host 192.168.1.100 key rad
+exit
+exit
+
+
+
+④最初にIPアドレスの割り振り
+　・PC0：192.168.1.1
+　・PC1：192.168.1.2
+　・PC2：192.168.1.3
+　　サブネットマスク ：全て255.255.255.0
+
+⑤Vlan10設定
+
+en
+conf t
+vlan 10
+exit
+exit
+
+
+⑥ポート割当
+en
+conf t
+interface fastethernet0/1
+switchport mode access
+switchport access vlan 10
+no shutdown
+exit
+exit
+conf t
+interface fastethernet0/2
+switchport mode access
+switchport access vlan 10
+no shutdown
+exit
+exit
+conf t
+interface fastethernet0/3
+switchport mode access
+switchport access vlan 10
+no shutdown
+exit
+exit
+conf t
+interface fastethernet0/4
+switchport mode access
+switchport access vlan 10
+no shutdown
+exit
+exit
+show vlan
+
+
+
+⑦AAA設定
+en
+conf t
+interface fastethernet0/1
+switchport port-security
+switchport port-security maximum 1
+switchport port-security mac-address 0030.A336.211A
+exit
+exit
+conf t
+interface fastethernet0/2
+switchport port-security
+switchport port-security maximum 1
+switchport port-security mac-address 0060.2F7C.EEBD
+exit
+exit
+conf t
+interface fastethernet0/3
+switchport port-security
+switchport port-security maximum 2
+switchport port-security mac-address sticky
+switchport port-security violation restrict
+exit
+exit
+show port-security
+
+
+
